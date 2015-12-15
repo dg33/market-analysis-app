@@ -1,0 +1,15 @@
+h1 {
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+  background-color: #818C8D;
+}
+img {
+  width: 100px;
+}
+body {
+  background-color: #314A73;
+}
+.pick {
+  color: #C1222B;
+  text-align: center;
+}
