@@ -4,12 +4,14 @@ h1 {
   background-color: #818C8D;
 }
 img {
-  width: 100px;
+  width: 150px;
+  margin-left: 12em;
+  margin-bottom: 4em;
 }
 body {
   background-color: #314A73;
 }
 .pick {
-  color: #C1222B;
+  color: #F1E9C2;
   text-align: center;
 }
