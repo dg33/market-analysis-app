@@ -62,18 +62,20 @@ showResults: function(){
     this.resultsEl.hidden = false;
 
   this.resultsEl.addEventListener('click', function(){
-    productRank.resListEl.innerHTML = '';
+    // productRank.resListEl.innerHTML = '';
     console.log('result button was clicked');
       productRank.resultsEl.hidden = true;
-  for(var i=0; i<allProducts.length; i++) {
-    var liEl = document.createElement('li');
-    liEl.textContent = allProducts[i].name + ' has ' + allProducts[i].tally + ' clicks';
-    productRank.resListEl.appendChild(liEl);
+      makeChart();
+
+  // for(var i=0; i<allProducts.length; i++) {
+  //   var liEl = document.createElement('li');
+  //   liEl.textContent = allProducts[i].name + ' has ' + allProducts[i].tally + ' clicks';
+  //   // productRank.resListEl.appendChild(liEl);
     //Make a list element
     //Give the list element content
     //Append the list element to the ul
 
-  }
+  
   });
 
   }
@@ -112,3 +114,27 @@ productRank.middleEl.addEventListener('click', productRank.dispayImages);
 productRank.rightEl.addEventListener('click', productRank.dispayImages);
 
 productRank.displayImages();
+
+function makeChart() {
+
+var productData = {
+    labels: [],
+    datasets: [
+        {
+            label: "My First dataset",
+            fillColor: "rgba(220,220,220,0.5)",
+            strokeColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            highlightStroke: "rgba(220,220,220,1)",
+            data: []
+        }
+    ]
+};
+for(var i=0; i < allProducts.length; i++) {
+  productData.labels.push(allProducts[i].name);
+  productData.datasets[0].data.push(allProducts[i].tally);
+}
+
+var ctx = document.getElementById('product-chart').getContext('2d');
+    var prods = new Chart(ctx).Bar(productData);
+}
