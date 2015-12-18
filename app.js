@@ -15,8 +15,6 @@ new Product(productNames[i], 'img/' + productNames[i] + '.jpg');
 }
 };
 
-buildAlbum();
-
 
 var productRank = {
   totalClicks: 0,
@@ -75,7 +73,7 @@ showResults: function(){
     //Give the list element content
     //Append the list element to the ul
 
-  
+
   });
 
   }
@@ -86,6 +84,10 @@ showResults: function(){
     productRank.resListEl.innerHTML = '';
     productRank.totalClicks += 1;
     productRank.leftObj.tally += 1;
+    var setJson1 = JSON.stringify(productData);
+    localStorage.setItem('ice', setJson1);
+    var setJson2 = JSON.stringify(allProducts);
+    localStorage.setItem('fire', setJson2);
     console.log(productRank.leftObj.name + ' has ' + productRank.leftObj.tally);
     productRank.showResults();
     productRank.displayImages();
@@ -95,6 +97,10 @@ productRank.rightEl.addEventListener('click', function() {
   productRank.resListEl.innerHTML = '';
   productRank.totalClicks += 1;
   productRank.rightObj.tally += 1;
+  var setJson1 = JSON.stringify(productData);
+  localStorage.setItem('ice', setJson1);
+  var setJson2 = JSON.stringify(allProducts);
+  localStorage.setItem('fire', setJson2);
   console.log(productRank.rightObj.name + ' has ' + productRank.rightObj.tally);
   productRank.showResults();
   productRank.displayImages();
@@ -104,37 +110,57 @@ productRank.middleEl.addEventListener('click', function() {
   productRank.resListEl.innerHTML = '';
   productRank.totalClicks += 1;
   productRank.middleObj.tally += 1;
+  var setJson1 = JSON.stringify(productData);
+  localStorage.setItem('ice', setJson1);
+  var setJson2 = JSON.stringify(allProducts);
+  localStorage.setItem('fire', setJson2);
   console.log(productRank.middleObj.name + ' has ' + productRank.middleObj.tally);
   productRank.showResults();
   productRank.displayImages();
 })
+if (localStorage.getItem('fire') === null || localStorage.getItem('ice') === null) {
+  console.log('localStorage is empty.');
+//Build the product array as we did before using localStorage
+buildAlbum();
+} else {
+  console.log('There is data in localStorage');
+  //Get each of the localStorage keys both of them
+  //Json.parse each of them
+  //Set these parse arrays into their original source
+  var ice1 = localStorage.getItem('ice');
+  var productData = JSON.parse(ice1);
 
-productRank.leftEl.addEventListener('click', productRank.dispayImages);
-productRank.middleEl.addEventListener('click', productRank.dispayImages);
-productRank.rightEl.addEventListener('click', productRank.dispayImages);
+  var fire1 = localStorage.getItem('fire');
+  var allProducts = JSON.parse(fire1);
+}
 
-productRank.displayImages();
+// productRank.leftEl.addEventListener('click', productRank.dispayImages);
+// productRank.middleEl.addEventListener('click', productRank.dispayImages);
+// productRank.rightEl.addEventListener('click', productRank.dispayImages);
+  var productData;
 
 function makeChart() {
 
-var productData = {
-    labels: [],
-    datasets: [
-        {
-            label: "My First dataset",
-            fillColor: "rgba(220,220,220,0.5)",
-            strokeColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            highlightStroke: "rgba(220,220,220,1)",
-            data: []
-        }
-    ]
-};
-for(var i=0; i < allProducts.length; i++) {
-  productData.labels.push(allProducts[i].name);
-  productData.datasets[0].data.push(allProducts[i].tally);
-}
+   productData = {
+      labels: [],
+      datasets: [
+          {
+              label: "My First dataset",
+              fillColor: "rgba(220,220,220,0.5)",
+              strokeColor: "rgba(220,220,220,0.8)",
+              highlightFill: "rgba(220,220,220,0.75)",
+              highlightStroke: "rgba(220,220,220,1)",
+              data: []
+          }
+      ]
+  };
+  for(var i=0; i < allProducts.length; i++) {
+    productData.labels.push(allProducts[i].name);
+    productData.datasets[0].data.push(allProducts[i].tally);
+  }
 
-var ctx = document.getElementById('product-chart').getContext('2d');
-    var prods = new Chart(ctx).Bar(productData);
+
+  var ctx = document.getElementById('product-chart').getContext('2d');
+      var prods = new Chart(ctx).Bar(productData);
 }
+productRank.displayImages();
